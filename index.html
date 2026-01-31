@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Pesos - Gym Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1><i class="ph-fill ph-barbell"></i> Gym Tracker</h1>
+            <button id="btn-add-exercise" class="btn-primary"><i class="ph-bold ph-plus"></i> Nuevo Ejercicio</button>
+        </header>
+
+        <main id="exercises-grid" class="exercises-grid">
+            <!-- Las tarjetas se generarán dinámicamente aquí -->
+        </main>
+    </div>
+
+    <!-- Modal para Agregar Ejercicio -->
+    <div id="modal-new-exercise" class="modal">
+        <div class="modal-content">
+            <span class="close-modal"><i class="ph-bold ph-x"></i></span>
+            <h2><i class="ph-duotone ph-plus-circle"></i> Nuevo Ejercicio</h2>
+            <form id="form-new-exercise">
+                <input type="text" id="input-exercise-name" placeholder="Nombre (ej. Press Banca)" required>
+                <button type="submit" class="btn-primary">Crear Ejercicio</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Detalles del Ejercicio -->
+    <div id="modal-details" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close-modal" id="close-details"><i class="ph-bold ph-x"></i></span>
+            <h2 id="details-title">Nombre Ejercicio</h2>
+            
+            <div class="modal-layout">
+                <div class="modal-left">
+                    <div class="new-record-section">
+                        <h3><i class="ph-duotone ph-pencil-simple"></i> Registrar</h3>
+                        <form id="form-add-weight">
+                            <div class="input-group">
+                                <input type="number" id="input-weight" placeholder="100 kg" required step="0.1">
+                                <input type="number" id="input-reps" placeholder="12 reps" required>
+                            </div>
+                            <button type="submit" class="btn-secondary"><i class="ph-bold ph-check"></i> Guardar</button>
+                        </form>
+                    </div>
+
+                    <div class="history-section">
+                        <h3><i class="ph-duotone ph-clock-counter-clockwise"></i> Historial</h3>
+                        <ul id="weight-history-list" class="history-list">
+                            <!-- Lista de pesos -->
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="modal-right">
+                    <h3><i class="ph-duotone ph-chart-line-up"></i> Progreso</h3>
+                    <div class="chart-container">
+                        <canvas id="weightChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

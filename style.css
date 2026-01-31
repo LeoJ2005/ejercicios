@@ -1,0 +1,393 @@
+:root {
+    --bg-color: #0d0d0d; /* Slightly darker key black */
+    --card-bg: #1A1A1A;
+    --text-primary: #FFFFFF;
+    --text-secondary: #AAAAAA;
+    --accent-color: #FFD000; /* Vibrant Yellow */
+    --accent-hover: #b39200;
+    --secondary-accent: #FFFFFF; /* White for secondary hierarchy */
+    --danger-color: #FF5252;
+    --modal-overlay: rgba(0, 0, 0, 0.85);
+    --font-family: 'Outfit', sans-serif;
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem; /* Reduced for mobile */
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch; /* Full width button on mobile */
+    margin-bottom: 2rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #333;
+}
+
+h1 {
+    font-weight: 700;
+    font-size: clamp(1.8rem, 5vw, 2.5rem); /* Fluid typography */
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-hover));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+i.ph, i.ph-fill, i.ph-bold, i.ph-duotone {
+    vertical-align: middle;
+    font-size: 1.1em;
+}
+
+h2, h3 {
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Buttons */
+.btn-primary, .btn-secondary {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 0.2s, background-color var(--transition-speed);
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: #000;
+    width: 100%; /* Full width on mobile */
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 2px solid var(--secondary-accent);
+    color: var(--secondary-accent);
+    width: 100%;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Grid */
+.exercises-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Smaller min width */
+    gap: 1rem;
+}
+
+/* Cards */
+.exercise-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    border: 1px solid #333;
+}
+
+.exercise-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    border-color: var(--accent-color);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.exercise-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.last-weight {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.last-weight span {
+    color: var(--secondary-accent);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-overlay);
+    backdrop-filter: blur(5px);
+    overflow-y: auto; /* Allow scrolling of the entire modal overlay */
+    padding: 1rem; /* Padding for small screens */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: block; /* Changes from flex to block to allow normal document flow scroll */
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    padding: 1.5rem; /* More space efficient */
+    border-radius: 16px;
+    width: 95%; /* Use most of screen width */
+    max-width: 500px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    position: relative;
+    border: 1px solid #333;
+    animation: slideUp 0.3s ease-out;
+    margin: 2rem auto; /* Vertical spacing to allow scroll */
+}
+
+.modal-content.modal-large {
+    max-width: 1000px;
+    width: 95%;
+}
+
+/* Modal Layout Two Columns */
+.modal-layout {
+    display: flex;
+    flex-direction: column-reverse; /* Chart on top or bottom? Let's keep typical flow: Form first on mobile */
+    gap: 1rem; /* Reduced gap significantly from 2rem for mobile */
+}
+
+.modal-right {
+    background: #151515;
+    padding: 1rem; /* Less padding on mobile */
+    border-radius: 12px;
+    border: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem; /* Reduced gap between form and history */
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    flex-grow: 1; /* Fills remaining space */
+    min-height: 200px; /* Much shorter on mobile, more horizontal look */
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-modal {
+    color: var(--text-secondary);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    color: var(--text-primary);
+}
+
+/* Forms */
+input[type="text"], input[type="number"], input[type="date"] {
+    width: 100%;
+    padding: 0.6rem; /* Slightly smaller padding for mobile */
+    margin-bottom: 0.75rem; /* Tighter spacing */
+    background-color: #2C2C2C;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.95rem; /* Slightly smaller text */
+    color-scheme: dark; /* Forces browser date picker/icons to be dark mode compliant (white icons) */
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.input-group {
+    display: grid;
+    grid-template-columns: 1fr; /* Stacked for full width */
+    gap: 0.75rem; /* Tighter gap */
+}
+
+/* History List */
+.history-list {
+    list-style: none;
+    max-height: 200px; /* Bit taller since we have more horizontal space now potentially */
+    overflow-y: auto;
+    margin-top: 1rem; /* Reduced spacing */
+    padding-right: 5px;
+}
+
+.history-section h3 {
+    margin-top: 1.5rem; /* Reduced separation */
+    padding-top: 0.75rem;
+    border-top: 1px solid #333;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border-bottom: 1px solid #333;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.history-weight {
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #121212; 
+}
+::-webkit-scrollbar-thumb {
+    background: #333; 
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+/* Scrollbar styling for modal container itself if needed */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+/* Specific Breakpoints */
+
+/* Tablet & Up (>= 600px) */
+@media (min-width: 600px) {
+    header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .btn-primary {
+        width: auto;
+    }
+    
+    .app-container {
+        padding: 2rem;
+    }
+}
+
+/* Laptop/Desktop & Up (>= 900px) */
+@media (min-width: 900px) {
+    .modal-layout {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr; /* 2 Columns */
+        align-items: start;
+        gap: 2rem; /* Restore gap */
+    }
+    
+    .modal-right {
+        height: 100%; /* Fill height in grid mode */
+        padding: 1.5rem; /* Restore padding */
+    }
+
+    .modal-left {
+        gap: 2rem; /* Restore gap */
+    }
+
+    .chart-container {
+        min-height: 350px; /* Restore height for desktop */
+    }
+
+    .modal-content {
+        padding: 2.5rem;
+        overflow-y: visible; 
+    }
+    
+    .history-section h3 {
+        margin-top: 2.5rem;
+    }
+    
+    .input-group {
+        gap: 1rem;
+    }
+    
+    input[type="text"], input[type="number"] {
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
+}
+
+/* Mobile S/M special cases */
+@media (max-width: 380px) {
+    .exercises-grid {
+        grid-template-columns: 1fr; /* Single column for very small devices */
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+}
