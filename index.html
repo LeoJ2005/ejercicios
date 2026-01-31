@@ -14,7 +14,19 @@
     <div class="app-container">
         <header>
             <h1><i class="ph-fill ph-barbell"></i> Gym Tracker</h1>
-            <button id="btn-add-exercise" class="btn-primary"><i class="ph-bold ph-plus"></i> Nuevo Ejercicio</button>
+            <div class="header-actions">
+                <div class="lang-menu" style="position: relative;">
+                    <button id="btn-lang-toggle" class="btn-secondary" style="width: auto; padding: 0.5rem 0.75rem; min-width: 45px; font-weight: 600;">ES</button>
+                    <ul id="lang-dropdown" class="lang-dropdown hidden">
+                        <li data-lang="es">ES - Español</li>
+                        <li data-lang="en">EN - English</li>
+                        <li data-lang="fr">FR - Français</li>
+                        <li data-lang="de">DE - Deutsch</li>
+                        <li data-lang="zh">ZH - 中文</li>
+                    </ul>
+                </div>
+                <button id="btn-add-exercise" class="btn-primary"><i class="ph-bold ph-plus"></i> Nuevo Ejercicio</button>
+            </div>
         </header>
 
         <main id="exercises-grid" class="exercises-grid">
@@ -25,8 +37,12 @@
     <!-- Modal para Agregar Ejercicio -->
     <div id="modal-new-exercise" class="modal">
         <div class="modal-content">
-            <span class="close-modal"><i class="ph-bold ph-x"></i></span>
-            <h2><i class="ph-duotone ph-plus-circle"></i> Nuevo Ejercicio</h2>
+            <div class="modal-header-row">
+                <h2><i class="ph-duotone ph-plus-circle"></i> Nuevo Ejercicio</h2>
+                <div class="modal-header-actions">
+                    <span class="close-modal"><i class="ph-bold ph-x"></i></span>
+                </div>
+            </div>
             <form id="form-new-exercise">
                 <input type="text" id="input-exercise-name" placeholder="Nombre (ej. Press Banca)" required>
                 <button type="submit" class="btn-primary">Crear Ejercicio</button>
@@ -34,11 +50,45 @@
         </div>
     </div>
 
+    <!-- Modal para Editar Nombre -->
+    <div id="modal-edit-exercise" class="modal">
+        <div class="modal-content">
+            <div class="modal-header-row">
+                <h2><i class="ph-duotone ph-pencil-simple"></i> Editar Nombre</h2>
+                <div class="modal-header-actions">
+                    <span class="close-modal"><i class="ph-bold ph-x"></i></span>
+                </div>
+            </div>
+            <form id="form-edit-exercise">
+                <input type="text" id="input-edit-name" placeholder="Nuevo nombre" required>
+                <button type="submit" class="btn-primary">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Confirmar Eliminación -->
+    <div id="modal-delete-confirm" class="modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <h2 style="justify-content: center; color: var(--danger-color);"><i class="ph-duotone ph-warning"></i> ¿Eliminar Ejercicio?</h2>
+            <p style="margin-bottom: 2rem; color: var(--text-secondary);">Esta acción no se puede deshacer. Se borrará todo el historial.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button id="btn-cancel-delete" class="btn-secondary" style="border-color: #555; color: #aaa;">Cancelar</button>
+                <button id="btn-confirm-delete" class="btn-primary" style="background-color: var(--danger-color); color: white;">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal de Detalles del Ejercicio -->
     <div id="modal-details" class="modal">
         <div class="modal-content modal-large">
-            <span class="close-modal" id="close-details"><i class="ph-bold ph-x"></i></span>
-            <h2 id="details-title">Nombre Ejercicio</h2>
+            <div class="modal-header-row">
+                <h2 id="details-title">Nombre Ejercicio</h2>
+                <div class="modal-header-actions">
+                    <button class="icon-btn" id="btn-edit-exercise" title="Editar Nombre"><i class="ph ph-pencil"></i></button>
+                    <button class="icon-btn danger" id="btn-delete-exercise" title="Eliminar Ejercicio"><i class="ph ph-trash"></i></button>
+                    <span class="close-modal" id="close-details"><i class="ph-bold ph-x"></i></span>
+                </div>
+            </div>
             
             <div class="modal-layout">
                 <div class="modal-left">
